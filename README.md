@@ -15,13 +15,23 @@ Codegen using playwright command
 
 Button Link Automation
 
+//click 
+await page.getByRole("link", { name: "Make Appointment" }).click();
 
-//click            await page.getByRole("link", { name: "Make Appointment" }).click();
-//Press            await page.getByRole("link", { name: "Make Appointment" }).press("Enter");
-//double click     await page.getByRole("link", { name: "Make Appointment" }).dblclick();
-//right click      await page.getByRole("link", { name: "Make Appointment" }).click({ button: "right" });
-// hover           await page.getByRole("link", { name: "Make Appointment" }).hover();
-//timeout if slow  await page.getByRole("link", { name: "Make Appointment" }).click({timeout:10_000});
+//Press
+await page.getByRole("link", { name: "Make Appointment" }).press("Enter");
+
+//double click 
+await page.getByRole("link", { name: "Make Appointment" }).dblclick();
+
+//right click
+await page.getByRole("link", { name: "Make Appointment" }).click({ button: "right" });
+
+// hover 
+await page.getByRole("link", { name: "Make Appointment" }).hover();
+
+//timeout if slow
+await page.getByRole("link", { name: "Make Appointment" }).click({timeout:10_000});
 
 
 Text field Automation
@@ -29,7 +39,7 @@ Text field Automation
 await page.getByLabel("Username").clear();
 await page.getByLabel("Username").fill("John Doe");
 
-// ressSeqentially (slow typing)
+//ressSeqentially (slow typing)
 await page.getByLabel("Username").pressSequentially("John Doe", {delay: 300});
 
 DropDown Automation
