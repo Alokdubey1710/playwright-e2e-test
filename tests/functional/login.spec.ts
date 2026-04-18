@@ -18,7 +18,7 @@ test.describe("Login functionality", () => {
 
         test("Should login successfully", async ({ page }) => {
    
-           //Successful login
+          //Successful login
 
           await page.getByLabel("Username").fill("John Doe");
           await page.getByLabel("Password").fill("ThisIsNotAPassword");
@@ -26,6 +26,7 @@ test.describe("Login functionality", () => {
 
           // Assert a text
           await expect(page.locator("//h2")).toContainText("Make Appointment");
+
     });
 
         test("Should prevent login with invalid creds", async ({ page }) => {
