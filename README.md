@@ -2,7 +2,7 @@
 
 Codegen is a built-in Playwright tool that automatically generates test scripts by recording user actions in the browser. It helps speed up the test automation process and is very useful for beginners.
 
-▶️ Run Codegen
+```▶️ Run Codegen
 
 npx playwright codegen
 
@@ -12,6 +12,7 @@ These methods should NOT be awaited because they do not return a Promise
 Locator is used to perform actions on elements
 
 🔘 Button / Link Automation
+```Javascript code
 
 // Click
 await page.getByRole("link", { name: "Make Appointment" }).click();
