@@ -1,90 +1,83 @@
-CODEGEN->
+📌 Codegen using Playwright
 
-Codegen using playwright command
+Codegen is a built-in Playwright tool that automatically generates test scripts by recording user actions in the browser. It helps speed up the test automation process and is very useful for beginners.
 
-  CodeGen is a tool that automatically generates test scripts by recording user actions in the browser, helping speed up test automation.
+▶️ Run Codegen
 
-  npx playwright codegen
+npx playwright codegen
 
-  
-  *Playwright locatos
+📍 Playwright Locators
+page.getBy() and page.locator() methods return a Locator object
+These methods should NOT be awaited because they do not return a Promise
+Locator is used to perform actions on elements
 
-  'page.getBy()' and 'page.locator()' method returns the 'locator' object
- -> the above method not to be "awaited " bcoz it does not return a promise
- ->the type of locator is an object
+🔘 Button / Link Automation
 
-Button Link Automation
-
-//click 
+// Click
 await page.getByRole("link", { name: "Make Appointment" }).click();
 
-//Press
+// Press Enter
 await page.getByRole("link", { name: "Make Appointment" }).press("Enter");
 
-//double click 
+// Double Click
 await page.getByRole("link", { name: "Make Appointment" }).dblclick();
 
-//right click
+// Right Click
 await page.getByRole("link", { name: "Make Appointment" }).click({ button: "right" });
 
-// hover 
+// Hover
 await page.getByRole("link", { name: "Make Appointment" }).hover();
 
-//timeout if slow
-await page.getByRole("link", { name: "Make Appointment" }).click({timeout:10_000});
+// Timeout handling (for slow elements)
+await page.getByRole("link", { name: "Make Appointment" }).click({ timeout: 10000 });
 
+📝 Text Field Automation
 
-Text field Automation
-
+// Clear and Fill
 await page.getByLabel("Username").clear();
 await page.getByLabel("Username").fill("John Doe");
 
-//ressSeqentially (slow typing)
-await page.getByLabel("Username").pressSequentially("John Doe", {delay: 300});
+// Slow typing (simulate real user)
+await page.getByLabel("Username").pressSequentially("John Doe", { delay: 300 });
 
-DropDown Automation
-
+📂 Dropdown Automation
 Steps:
-1.Assert Value option
-2.select by:
--label
--Index
-3.Assert the count
-4.Get all Drop down values
+Assert default value
+Select option (by label / index)
+Assert count
+Get all dropdown values
 
-1. //Assert default option
+1️⃣ Assert Default Option
 
-  await expect(page.getByLabel('Facility')).toHaveValue('Tokyo CURA Healthcare Center');
-  await page.getByLabel('Facility').selectOption('Hongkong CURA Healthcare Center');
+await expect(page.getByLabel('Facility')).toHaveValue('Tokyo CURA Healthcare Center');
+await page.getByLabel('Facility').selectOption('Hongkong CURA Healthcare Center');
 
-2. //Select by labele or index
+2️⃣ Select by Label or Index
 
-  await page.getByLabel('Facility').selectOption({label:"Seoul CURA Healthcare Center"});
-  await page.getByLabel('Facility').selectOption({index:0});
+await page.getByLabel('Facility').selectOption({ label: "Seoul CURA Healthcare Center" });
+await page.getByLabel('Facility').selectOption({ index: 0 });
 
-3. //Assert the count
+3️⃣ Assert Dropdown Count
 
-  let dropdwnOptionsEle = page.getByLabel("Facility").locator('option');
-  await expect(dropdwnOptionsEle).toHaveCount(3);
+let dropdwnOptionsEle = page.getByLabel("Facility").locator('option');
+await expect(dropdwnOptionsEle).toHaveCount(3);
 
-4. //Get all dropdown values
+5️⃣ Extract Values using Loop
 
-  let listOfDropdwnElems= await page.getByLabel("Facility").all()
+let listOfOptions = [];
 
-5. //for of loop
+for (let ele of listOfDropdwnElems) {
+let eleTxt = await ele.textContent();
 
-  let listOfOptions = []
+if (eleTxt) {
+listOfOptions.push(eleTxt);
+}
+}
 
-  for(let ele of listOfDropdwnElems){
-    let eleTxt = await ele.textContent();
-    listOfOptions.push(eleTxt)
+console.log(`>>> List of Options: ${listOfOptions}`);
 
-    if(eleTxt) {
-      listOfOptions.push(eleTxt)
-    }
-  }
-   console.log('>>> List of Options: ${listOfOptions}');
-
-** Radio and Check box Automation
-->allow to select only one option
-->Checkbox - Allows for multi-entry
+☑️ Radio Button & Checkbox Automation
+Radio Button
+Allows selecting only one option at a time
+Checkbox
+Allows selecting multiple options
