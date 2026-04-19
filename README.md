@@ -1,20 +1,27 @@
-📌 Codegen using Playwright
+## 📌 Codegen using Playwright
 
 Codegen is a built-in Playwright tool that automatically generates test scripts by recording user actions in the browser. It helps speed up the test automation process and is very useful for beginners.
 
-```▶️ Run Codegen
+### ▶️ Run Codegen
 
+```bash
 npx playwright codegen
+```
 
-📍 Playwright Locators
-page.getBy() and page.locator() methods return a Locator object
-These methods should NOT be awaited because they do not return a Promise
-Locator is used to perform actions on elements
+---
 
-🔘 Button / Link Automation
-```Javascript code
+## 📍 Playwright Locators
 
-```// Click
+* `page.getBy()` and `page.locator()` methods return a Locator object
+* These methods should **NOT** be awaited
+* Locator is used to perform actions on elements
+
+---
+
+## 🔘 Button / Link Automation
+
+```javascript
+// Click
 await page.getByRole("link", { name: "Make Appointment" }).click();
 
 // Press Enter
@@ -29,109 +36,148 @@ await page.getByRole("link", { name: "Make Appointment" }).click({ button: "righ
 // Hover
 await page.getByRole("link", { name: "Make Appointment" }).hover();
 
-// Timeout handling (for slow elements)
+// Timeout handling
 await page.getByRole("link", { name: "Make Appointment" }).click({ timeout: 10000 });
 ```
 
-```📝 Text Field Automation
+---
 
+## 📝 Text Field Automation
+
+```javascript
 // Clear and Fill
 await page.getByLabel("Username").clear();
 await page.getByLabel("Username").fill("John Doe");
 
-// Slow typing (simulate real user)
+// Slow typing
 await page.getByLabel("Username").pressSequentially("John Doe", { delay: 300 });
 ```
 
-```📂 Dropdown Automation
-Steps:
-Assert default value
-Select option (by label / index)
-Assert count
-Get all dropdown values
+---
 
-1️⃣ Assert Default Option
+## 📂 Dropdown Automation
 
+### 1️⃣ Assert Default Option
+
+```javascript
 await expect(page.getByLabel('Facility')).toHaveValue('Tokyo CURA Healthcare Center');
 await page.getByLabel('Facility').selectOption('Hongkong CURA Healthcare Center');
+```
 
-2️⃣ Select by Label or Index
+### 2️⃣ Select by Label or Index
 
+```javascript
 await page.getByLabel('Facility').selectOption({ label: "Seoul CURA Healthcare Center" });
 await page.getByLabel('Facility').selectOption({ index: 0 });
+```
 
-3️⃣ Assert Dropdown Count
+### 3️⃣ Assert Dropdown Count
 
+```javascript
 let dropdwnOptionsEle = page.getByLabel("Facility").locator('option');
 await expect(dropdwnOptionsEle).toHaveCount(3);
+```
 
-5️⃣ Extract Values using Loop
+### 4️⃣ Extract Values using Loop
 
+```javascript
 let listOfOptions = [];
 
 for (let ele of listOfDropdwnElems) {
-let eleTxt = await ele.textContent();
+  let eleTxt = await ele.textContent();
 
-if (eleTxt) {
-listOfOptions.push(eleTxt);
-}
+  if (eleTxt) {
+    listOfOptions.push(eleTxt);
+  }
 }
 
 console.log(`>>> List of Options: ${listOfOptions}`);
-
-☑️ Radio Button & Checkbox Automation
-Radio Button
-Allows selecting only one option at a time
-Checkbox
-Allows selecting multiple options
 ```
 
+---
 
-- Codegen CLI: `npx playwright codegen https://www.saucedemo.com/`
+## ☑️ Radio Button & Checkbox Automation
 
+* Radio Button → only one option select
+* Checkbox → multiple options select
 
-```Playwright Debugging Options
-1.Vs Code Test Explorer
-2.UI model(--ui)
-3.Debug(PWDEBUG=1)
-4.Trace Viewer
+---
 
-```2.Ui model
+## ▶️ Codegen CLI
 
-    "debug:ui": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --ui --headed",
+```bash
+npx playwright codegen https://www.saucedemo.com/
+```
 
-```3.debug(PWDEBUG=1)
+---
 
-    "debug:cli": "PWDEBUG=1 npx playwright test tests/demo/debug.make.aptmnt.spec.ts",
+## 🐞 Playwright Debugging Options
 
-```4.Trace Viewer
+1. VS Code Test Explorer
+2. UI Mode
+3. Debug (`PWDEBUG=1`)
+4. Trace Viewer
 
-    "debug:trace": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --trace on",
+### 2️⃣ UI Mode
 
+```json
+"debug:ui": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --ui --headed"
+```
 
-```Allure Reporter->
+### 3️⃣ Debug CLI
 
-1.Rich UI
-2.Framework Agnostick - support different like selinum,wdio and playwright
-3.detailed insights into test execution
-4.trend tracking
-5.work in  ci/cd
+```json
+"debug:cli": "PWDEBUG=1 npx playwright test tests/demo/debug.make.aptmnt.spec.ts"
+```
 
-**Allure Setup**
+### 4️⃣ Trace Viewer
 
-1.Check if allure is installed globally -> `allure --version`, if not present
-2.install allure 
-`npm install -g allure-commandline`
+```json
+"debug:trace": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --trace on"
+```
 
-3.install allure reporter for project level - `npm install -D allure-playwright`
+---
+
+## 📊 Allure Reporter
+
+* Rich UI
+* Framework agnostic (Selenium, WDIO, Playwright)
+* Detailed insights
+* Trend tracking
+* Works in CI/CD
+
+### ⚙️ Allure Setup
+
+```bash
+# Check version
+allure --version
+
+# Install globally
+npm install -g allure-commandline
+
+# Install for project
+npm install -D allure-playwright
+```
+
+### Reporter Config
 
 ```ts
-
 reporter: [
-    ['html'],    //html reporter
-    ['allure-playwright'],   //allure reporter
-],
+  ['html'],
+  ['allure-playwright'],
+]
+```
 
+### TO check allure report 
+allure serve
+```
 
+**Install Java**
+1. Install from `https://adoptium.net/en-GB/`
+2. Run and confirm `java --version`
+---
 
-
+**Screenshot**
+1.Config options -> `use` -> `screenshot`
+2.At test scope level
+---

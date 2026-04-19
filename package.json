@@ -7,6 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "pw-basic-cap": "npx playwright test tests/demo/pw.basic.cap.make.aptmnt.spec.ts --headed",
     "debug:trace": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --trace on",
     "debug:cli": "set PWDEBUG=1 && npx playwright test tests/demo/debug.make.aptmnt.spec.ts",
     "debug:ui": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --ui --headed",
@@ -17,9 +18,14 @@
     "login": "npx playwright test tests/functional/login.spec.ts --headed",
     "demo": "npx playwright test tests/demo/mytest.spec.ts --headed"
   },
-
+  "keywords": [
+    "playwright",
+    "playwright-e2e-tests",
+    "playwright-mcp"
+  ],
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.6.0"
+    "@types/node": "^25.6.0",
+    "allure-playwright": "^3.7.1"
   }
 }

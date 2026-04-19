@@ -12,7 +12,7 @@ test("Should do something", { tag: "@smoke" }, async ({ page }, testInfo) => {
   await page.locator("//h1").click();
 });
 
-test.only("Should demo locatos", async ({ page }) => {
+test("Should demo locatos", async ({ page }) => {
   //1.Launch Url
   await page.goto("https://katalon-demo-cura.herokuapp.com/");
 
@@ -22,4 +22,19 @@ test.only("Should demo locatos", async ({ page }) => {
 
   // await makeAppmtBtn.click();
   // await expect(page.getByText("Please login to make")).toBeVisible();
+});
+
+
+test("Should demo config file", async ({ page }, testInfo) => {
+
+  console.log(`>>Config at run-time: ${JSON.stringify(testInfo.config)}`);
+  
+});
+
+
+test.only("Should demo fixtures", async ({ page,browserName }, testInfo) => {
+  console.log(`>>The test runs on: ${browserName}`);
+  
+
+  
 });
