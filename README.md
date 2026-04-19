@@ -14,7 +14,7 @@ Locator is used to perform actions on elements
 🔘 Button / Link Automation
 ```Javascript code
 
-// Click
+```// Click
 await page.getByRole("link", { name: "Make Appointment" }).click();
 
 // Press Enter
@@ -31,8 +31,9 @@ await page.getByRole("link", { name: "Make Appointment" }).hover();
 
 // Timeout handling (for slow elements)
 await page.getByRole("link", { name: "Make Appointment" }).click({ timeout: 10000 });
+```
 
-📝 Text Field Automation
+```📝 Text Field Automation
 
 // Clear and Fill
 await page.getByLabel("Username").clear();
@@ -40,8 +41,9 @@ await page.getByLabel("Username").fill("John Doe");
 
 // Slow typing (simulate real user)
 await page.getByLabel("Username").pressSequentially("John Doe", { delay: 300 });
+```
 
-📂 Dropdown Automation
+```📂 Dropdown Automation
 Steps:
 Assert default value
 Select option (by label / index)
@@ -82,3 +84,54 @@ Radio Button
 Allows selecting only one option at a time
 Checkbox
 Allows selecting multiple options
+```
+
+
+- Codegen CLI: `npx playwright codegen https://www.saucedemo.com/`
+
+
+```Playwright Debugging Options
+1.Vs Code Test Explorer
+2.UI model(--ui)
+3.Debug(PWDEBUG=1)
+4.Trace Viewer
+
+```2.Ui model
+
+    "debug:ui": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --ui --headed",
+
+```3.debug(PWDEBUG=1)
+
+    "debug:cli": "PWDEBUG=1 npx playwright test tests/demo/debug.make.aptmnt.spec.ts",
+
+```4.Trace Viewer
+
+    "debug:trace": "npx playwright test tests/demo/debug.make.aptmnt.spec.ts --trace on",
+
+
+```Allure Reporter->
+
+1.Rich UI
+2.Framework Agnostick - support different like selinum,wdio and playwright
+3.detailed insights into test execution
+4.trend tracking
+5.work in  ci/cd
+
+**Allure Setup**
+
+1.Check if allure is installed globally -> `allure --version`, if not present
+2.install allure 
+`npm install -g allure-commandline`
+
+3.install allure reporter for project level - `npm install -D allure-playwright`
+
+```ts
+
+reporter: [
+    ['html'],    //html reporter
+    ['allure-playwright'],   //allure reporter
+],
+
+
+
+
