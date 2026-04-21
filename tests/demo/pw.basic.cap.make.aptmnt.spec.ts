@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
- test.describe('Make Appointment', () => {
+ test.describe('Make Appointment',{annotation: {type:"Story", description: "JIRA-1234: Make an appointment feature"}}, () => {
 
     test.beforeEach('Login with valid credentials', async ({page}, testInfo) => {
         
@@ -32,32 +32,60 @@ import { test, expect } from '@playwright/test';
 });
 
     
-    test('Should make and appointment with non-default value', async ({ page }) => {
+    test(
+      "Should make an appointment with non-default value",
+      { 
+        annotation: {
+          type: "bug",
+          description: "defect:1234 - does not work in firefox ",
+          
+        },
+        tag:"@smoke"
+      },
+      async ({ page, browserName }) => {
+        //skip the test for firefox
+        test.skip(browserName === "firefox", "Open bug id =1234");
 
-  
-//Dropdown
-  await page.getByLabel('Facility').selectOption('Hongkong CURA Healthcare Center');
-//checkbox
-  await page.getByRole('checkbox', { name: 'Apply for hospital readmission' }).check();
+        //Dropdown
+        await page
+          .getByLabel("Facility")
+          .selectOption("Hongkong CURA Healthcare Center");
+        //checkbox
+        await page
+          .getByRole("checkbox", { name: "Apply for hospital readmission" })
+          .check();
 
-//radio button
-  await page.getByRole('radio', { name: 'Medicaid' }).check();
+        //radio button
+        await page.getByRole("radio", { name: "Medicaid" }).check();
 
-//date and input button
-  await page.getByRole('textbox', { name: 'Visit Date (Required)' }).click();
-  await page.getByRole('textbox', { name: 'Visit Date (Required)' }).fill('10/02/2026');
-  // await page.getByRole('textbox', { name: 'Visit Date (Required)' }).press('Enter');
+        //date and input button
+        await page
+          .getByRole("textbox", { name: "Visit Date (Required)" })
+          .click();
+        await page
+          .getByRole("textbox", { name: "Visit Date (Required)" })
+          .fill("02/10/2026");
+        await page
+          .getByRole("textbox", { name: "Visit Date (Required)" })
+          .press("Enter");
 
-//multi line comment
-  await page.getByRole('textbox', { name: 'Comment' }).click();
-  await page.getByRole('textbox', { name: 'Comment' }).fill('This is a multi line comments by playwright codegen');
+        //multi line comment
+        await page.getByRole("textbox", { name: "Comment" }).click();
+        await page
+          .getByRole("textbox", { name: "Comment" })
+          .fill("This is a multi line comments by playwright codegen");
 
-//button
-  await page.getByRole('button', { name: 'Book Appointment' }).click();
+        //button
+        await page.getByRole("button", { name: "Book Appointment" }).click();
 
-//Assertion
-  await expect(page.locator('h2')).toContainText('Appointment Confirmation');
-  await expect(page.getByRole('link', { name: 'Go to Homepage' })).toBeVisible();
-});
+        //Assertion
+        await expect(page.locator("h2")).toContainText(
+          "Appointment Confirmation",
+        );
+        await expect(
+          page.getByRole("link", { name: "Go to Homepage" }),
+        ).toBeVisible();
+      },
+    );
 })
-
+ 

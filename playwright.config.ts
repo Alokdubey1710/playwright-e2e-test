@@ -15,7 +15,7 @@ console.log(`Hello from config`);
  */
 export default defineConfig({
   testDir: "./tests",
-  // globalTimeout: 10_000,
+  globalTimeout: 3 * 60 * 60 * 1000, // 3 hours
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -24,6 +24,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
+  expect: { timeout: 10_000 },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     [
@@ -55,14 +56,22 @@ export default defineConfig({
     trace: "on-first-retry",
     ignoreHTTPSErrors: true,
     navigationTimeout: 30_000,
-    screenshot:"only-on-failure"
+    screenshot: "only-on-failure",
+    // video: "retain-on-failure",
+    // actionTimeout: 10_000,
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        // ...devices["Desktop Chrome"],
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
     },
 
     // {

@@ -168,16 +168,68 @@ reporter: [
 ]
 ```
 
-### TO check allure report 
+## 📊 Allure Report Setup
+
+### ▶️ Run Allure Report
+```bash
 allure serve
 ```
 
-**Install Java**
-1. Install from `https://adoptium.net/en-GB/`
-2. Run and confirm `java --version`
 ---
 
-**Screenshot**
-1.Config options -> `use` -> `screenshot`
-2.At test scope level
+## ☕ Install Java (Required for Allure)
+
+1. Install from: https://adoptium.net/en-GB/  
+2. Verify installation:
+```bash
+java --version
+```
+
 ---
+
+## 📸 Screenshot & Video Configuration
+
+### 🔹 Using `use` in config
+```javascript
+use: {
+  screenshot: "only-on-failure",
+  video: "retain-on-failure"
+}
+```
+
+### 🔹 At test level
+```javascript
+test.use({
+  screenshot: "only-on-failure"
+});
+```
+
+---
+
+## 🛠 Advanced Debugging (Playwright API Level)
+
+### Enable API logs
+```bash
+`set DEBUG=pw:api`
+```
+
+### Other debug namespaces
+- `pw:browser*`
+- `pw:channel*`
+- `pw:protocol*`
+
+---
+### Global Setup
+### Pseudo-Code
+1. Create `global-setup.ts` file
+2. export a single function that takes a config object
+3. Delete allure report
+   - Get the `allure-report` path
+   - Use `path` module to get a path
+   - Use `fs` native modules's sync method `existsSync, rmSync` to delete file
+
+4. Link it to the `config` file
+5. Run a simple test to confirm allure result is deleted
+6. Add a `RUNNER` in `.env`
+7. Install `dotenv` and load it to the config file
+8. Add a logic to delete only for `locals`
